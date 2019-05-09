@@ -1,3 +1,8 @@
+Tips:
+如果对已经监控的文件进行mv操作
+inotify是基于inode的，如果对已经监控的文件进行mv操作,mv后的目录还在监听中，并且wd没有变化，所以目录下文件的改动还是会触发事件。触发事件不可怕，关键是通过 wdToPath 映射还原的绝对路径已经不对了
+所以要再添加监听时加上IN_MOVE_SELF 事件监听,监听到了就要将他移除掉。
+
 inotify-java - README
 --
     Website: https://bitbucket.org/nbargnesi/inotify-java
